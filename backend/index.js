@@ -17,13 +17,22 @@ if(!parsedPayload.success){
 }
 await todo.create({
     title:createPayload.title,                //validate from zod
-    description:createPayload.description
+    description:createPayload.description,
+    completed:false
+})
+res.json({
+    msg:"todo created",
+    todoId:_id
 })
 })
-app.get("/todo",(req,res)=>{
+app.get("/todo",async (req,res)=>{
+    const findTodo=await todo.find({})
+    res.json({
+        findTodo
+    })
 
 })
-app.put("/completed",(req,res)=>{
+app.put("/completed",async(req,res)=>{
     const updatePayload=req.body
     const parsedPayload=updateTodo.safeParse(updatePayload)
     if(!parsedPayload.success){
@@ -32,4 +41,12 @@ app.put("/completed",(req,res)=>{
         })
         return
     }
+await todo.update({
+_id:req.body.id
+},{
+    completed:true
+})
+res.json({
+    msg:"task completed"
+})
 })
