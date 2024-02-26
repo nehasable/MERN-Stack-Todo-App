@@ -6,3 +6,6 @@ const todoSchema=mongoose.Schema({
     completed:boolean
 })
 const todo=mongoose.model('todos',todoSchema)
+module.exports={
+    todo:todo        //key:value
+}
