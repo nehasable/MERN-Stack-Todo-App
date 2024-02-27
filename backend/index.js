@@ -15,14 +15,14 @@ if(!parsedPayload.success){
     })
     return
 }
-await todo.create({
+const newTodo=await todo.create({
     title:createPayload.title,                //validate from zod
     description:createPayload.description,
     completed:false
 })
 res.json({
     msg:"todo created",
-    todoId:_id
+    todoId:newTodo._id
 })
 })
 app.get("/todo",async (req,res)=>{
@@ -42,7 +42,7 @@ app.put("/completed",async(req,res)=>{
         return
     }
 await todo.update({
-_id:req.body.id
+_id:req.body.id           //syntax for updating based on id
 },{
     completed:true
 })
@@ -50,3 +50,4 @@ res.json({
     msg:"task completed"
 })
 })
+app.listen(3300)

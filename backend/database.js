@@ -1,9 +1,9 @@
 const mongoose=require("mongoose")
 mongoose.connect("mongodb://localhost:27017/todo")
 const todoSchema=mongoose.Schema({
-    title:string,
-    description:string,
-    completed:boolean
+    title:String,
+    description:String,
+    completed:Boolean
 })
 const todo=mongoose.model('todos',todoSchema)
 module.exports={
