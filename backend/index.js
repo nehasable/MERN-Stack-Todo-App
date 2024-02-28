@@ -3,8 +3,9 @@ const { createTodo, updateTodo } = require('./types')
 const { todo } = require('./database')
 const app=express()
 const mongoose=require("mongoose")
+const cors=require("cors")
 app.use(express.json())
-
+app.use(cors)
 
 app.post('/todo',async (req,res)=>{
 const createPayload=req.body                //req.body input
@@ -15,6 +16,7 @@ if(!parsedPayload.success){
     })
     return
 }
+try{
 const newTodo=await todo.create({
     title:createPayload.title,                //validate from zod
     description:createPayload.description,
@@ -24,7 +26,11 @@ res.json({
     msg:"todo created",
     todoId:newTodo._id
 })
+}catch(err){
+    console.log(err)
+}
 })
+
 app.get("/todo",async (req,res)=>{
     const findTodo=await todo.find({})
     res.json({
@@ -50,4 +56,6 @@ res.json({
     msg:"task completed"
 })
 })
-app.listen(3300)
+app.listen(4000, () => {
+    console.log("Server running on port 4000");
+});
